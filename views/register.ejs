@@ -1,0 +1,23 @@
+<%- include('partials/_header') %>
+
+
+    <%- include('partials/_navbar') %>
+
+
+
+
+        <div class="form-container">
+            <h2>Kayıt Ol</h2>
+
+            <form method="POST" action="/user/register">
+                <input name="name" id="name" placeholder="İsim" type="name">
+                <input name="email" id="email" placeholder="Email" type="email">
+                <input name="password" id="password" placeholder="Şifre" type="password">
+
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
+
+
+        <%- include('partials/_footer') %>

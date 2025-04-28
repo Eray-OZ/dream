@@ -1,0 +1,26 @@
+<%- include('partials/_header') %>
+
+
+
+    <%- include('partials/_navbar') %>
+
+
+
+        <div class="analysis-container">
+            <h2>Rüya Analizi</h2>
+            <p>
+                <%= dream.analysis %>
+            </p>
+
+            <a href="/dream/story/<%= dream._id %>"><button>Hikaye</button></a>
+
+        </div>
+
+
+
+
+
+
+
+
+        <%- include('partials/_footer') %>

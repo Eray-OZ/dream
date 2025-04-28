@@ -1,0 +1,19 @@
+<%- include('partials/_header') %>
+
+
+    <%- include('partials/_navbar') %>
+
+
+
+        <div class="form-container">
+            <h2>Rüyanızı Yazın</h2>
+            <form method="POST" action="/dream">
+                <input name="title" id="title" placeholder="Başlık">
+                <textarea name="content" id="message" placeholder="Rüya..."></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
+
+
+        <%- include('partials/_footer') %>

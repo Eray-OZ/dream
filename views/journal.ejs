@@ -1,0 +1,46 @@
+<%- include('partials/_header') %>
+
+
+
+    <%- include('partials/_navbar') %>
+
+
+
+
+
+        <div class="container">
+
+            <% journals.map(journal=> { %>
+                <div class="card">
+
+                    <h3>
+                        <%= journal.title %>
+                    </h3>
+                    <br>
+                    <p>
+                        <%= journal.content.split(" ").slice(0,15).join(" ") + " ..." %>
+                    </p>
+                    <br>
+
+                    <span class="badge">
+                        <%= journal.category %>
+                    </span>
+
+                    <br>
+                    <br>
+
+                    <a href="/dream/analysis/<%= journal._id %>"><button>Analiz</button></a>
+
+                    <br>
+                    <br>
+
+                    <a href="/story/<%= journal._id %>"><button>Hikaye</button></a>
+
+                </div>
+
+                <% }) %>
+        </div>
+
+
+
+        <%- include('partials/_footer') %>

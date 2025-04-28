@@ -1,0 +1,14 @@
+<nav class="navbar">
+    <a href="#" class="logo">Rüya Günlüğü</a>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <% if (user) { %>
+            <li><a href="/dream/">Rüyaların</a></li>
+            <li><a href="/form">Rüya Ekle</a></li>
+            <% } else {%>
+
+                <li><a href="/login">Giriş Yap</a></li>
+                <li><a href="/register">Kayıt Ol</a></li>
+                <% } %>
+    </ul>
+</nav>
