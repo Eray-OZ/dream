@@ -38,6 +38,7 @@ app.use("/user", routerUser)
 
 
 
+
 app.listen(port, () => {
     connectDB()
     console.log(`Server running on http://localhost:${port}`)
