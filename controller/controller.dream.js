@@ -98,12 +98,12 @@ export const getStoryPage = async (req, res) => {
 
 
         const prompt = `Bir kişi, ${dream.title} adlı bir rüya gördü. Rüya, ${dream.content} şeklinde başladı. Ancak, bu rüya gizemli ve çözülmemiş bir şekilde yarıda kaldı. Yapay zeka, bu rüyanın devamını yaratmalı ve şu öğeleri içermelidir:
-    Rüyanın atmosferi: [rüyanın atmosferi hakkında bir açıklama ekleyin, örneğin: karanlık, heyecanlı, huzur verici, korkutucu]
-    Karakterlerin ilişkisi: [ana karakterin diğer karakterlerle olan ilişkisini anlatın]
-    Karakterlerin karşılaştığı zorluklar: [karakterin rüya boyunca karşılaştığı zorluklar, engeller veya düşmanlar hakkında bilgi verin]
-    Rüyanın teması: [rüyanın temel mesajı veya teması, örneğin: kaybolma, korku, keşif, aşk, hırs]
-    Rüyanın sonuna nasıl ulaşılabilir: [yapay zekanın bu rüyayı nasıl sonlandıracağı hakkında bir yönlendirme ekleyin]
-    Tüm bu öğeleri kullanarak rüyanın devamını yazmanı ve rüyanın nasıl tamamlanacağını yaratıcı bir şekilde açıklamanı istiyorum.`
+        Rüyanın atmosferi: [rüyanın atmosferi hakkında bir açıklama ekleyin, örneğin: karanlık, heyecanlı, huzur verici, korkutucu]
+        Karakterlerin ilişkisi: [ana karakterin diğer karakterlerle olan ilişkisini anlatın]
+        Karakterlerin karşılaştığı zorluklar: [karakterin rüya boyunca karşılaştığı zorluklar, engeller veya düşmanlar hakkında bilgi verin]
+        Rüyanın teması: [rüyanın temel mesajı veya teması, örneğin: kaybolma, korku, keşif, aşk, hırs]
+        Rüyanın sonuna nasıl ulaşılabilir: [yapay zekanın bu rüyayı nasıl sonlandıracağı hakkında bir yönlendirme ekleyin]
+        Tüm bu öğeleri kullanarak rüyanın devamını yazmanı ve rüyanın nasıl tamamlanacağını yaratıcı bir şekilde açıklamanı istiyorum.`
 
 
 
@@ -119,6 +119,8 @@ export const getStoryPage = async (req, res) => {
                 }
             }
         )
+
+
 
 
         const story = response.data.candidates[0].content.parts[0].text
