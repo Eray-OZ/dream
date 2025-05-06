@@ -1,5 +1,6 @@
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
+import Dream from '../models/Dream.js'
 
 
 
@@ -44,10 +45,13 @@ export const loginUser = async (req, res) => {
 
         if (same) {
 
-            const { username } = req.body;
-            req.session.user = { username };
+            req.session.user = { username: user.username }
 
-            res.redirect("/form")
+            req.session.userId = user._id.toString()
+
+
+
+            res.redirect("/dream")
 
         }
 
@@ -69,11 +73,16 @@ export const loginUser = async (req, res) => {
 
 
 export const logoutUser = async (req, res) => {
-    try {
-        res.redirect('/')
+
+    req.session.destroy(err => {
+        if (err) {
+            console.log("Çıkış hatası:", err);
+            return res.status(500).send("Çıkış yapılamadı.");
+        }
+
+        res.clearCookie("connect.sid");
+        res.redirect("/login");
+    });
 
 
-    } catch (error) {
-        res.json({ error })
-    }
 }

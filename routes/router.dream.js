@@ -1,5 +1,5 @@
 import express from 'express'
-import { addDream, getAnalysisPage, getJournal, getStoryPage } from '../controller/controller.dream.js'
+import { addDream, getAnalysisPage, getJournal, getStoryPage, filterDream, searchDream } from '../controller/controller.dream.js'
 import { isAuthenticated } from '../middleware/middleware.authenticate.js'
 
 
@@ -7,13 +7,18 @@ const router = express.Router()
 
 
 
-router.post("/", addDream)
+router.post("/", isAuthenticated, addDream)
 
-router.get("/analysis/:id", getAnalysisPage)
+router.get("/analysis/:id", isAuthenticated, getAnalysisPage)
 
-router.get("/story/:id", getStoryPage)
+router.get("/story/:id", isAuthenticated, getStoryPage)
 
-router.get("/", getJournal)
+router.get("/", isAuthenticated, getJournal)
+
+router.get("/filter", isAuthenticated, filterDream)
+
+router.get("/search", isAuthenticated, searchDream)
+
 
 
 

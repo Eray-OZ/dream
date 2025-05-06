@@ -10,11 +10,10 @@ const DreamSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    // user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'User',
-    // },
+    user: {
+        type: String,
+        required: true,
+    },
     createdAd: {
         type: Date,
         default: Date.now

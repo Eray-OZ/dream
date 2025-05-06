@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rüya Günlüğü - Hoşgeldiniz</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            background-color: #1a1a1a;
+            color: #f8f8f8;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow-y: auto;
+            height: 100%;
+
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .landing-container {
+            text-align: center;
+            padding: 50px 20px;
+            width: 80%;
+            max-width: 900px;
+            background-color: #2d033b;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(255, 78, 205, 0.4);
+        }
+
+        .landing-container h1 {
+            color: #ff4ecd;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .landing-container p {
+            color: #f8f8f8;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .landing-container button {
+            padding: 15px 25px;
+            background-color: #ff4ecd;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .landing-container button:hover {
+            background-color: #ff74d4;
+        }
+
+        .navbar {
+            background-color: #2d033b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(255, 78, 205, 0.4);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            color: #ff4ecd;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li a {
+            color: #f8f8f8;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #ff4ecd;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #f8f8f8;
+        }
+
+        .footer a {
+            color: #ff4ecd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <a href="#" class="logo">Rüya Günlüğü</a>
+        <ul>
+            <li><a href="/login">Giriş</a></li>
+            <li><a href="/register">Kayıt Ol</a></li>
+        </ul>
+    </div>
+
+    <div class="landing-container">
+        <h1>Hoşgeldiniz!</h1>
+        <p>Rüyalarınızı günlüğünüze kaydedin, rüyalarınızı analiz edin ve hikayelere dönüştürün!</p>
+        <button onclick="window.location.href='/login'">Hadi Başlayalım</button>
+    </div>
+
+
+</body>
+
+</html>

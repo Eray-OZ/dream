@@ -21,11 +21,15 @@ export const getStory = async (req, res) => {
     const { id } = req.params
     const dream = Dream.findById(id)
 
+
     res.render('story.ejs', { dream })
 }
 
-export const test = async (req, res) => {
-    res.render('test.ejs')
+
+
+
+export const getIndexPage = async (req, res) => {
+    res.render('index.ejs')
 }
 
 
