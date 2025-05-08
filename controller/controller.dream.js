@@ -140,9 +140,14 @@ export const generateImage = async (req, res) => {
         formData.append('output_format', 'webp')
 
 
+        const endpointcore = `https://api.stability.ai/v2beta/stable-image/generate/core`
+
+        const endpointsd3 = `https://api.stability.ai/v2beta/stable-image/generate/sd3`
+
 
         const response = await axios.postForm(
-            `https://api.stability.ai/v2beta/stable-image/generate/core`,
+            endpointcore
+            ,
             formData,
             {
                 validateStatus: undefined,

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rüya Günlüğü - Hoşgeldiniz</title>
+    <title>Rüya Günlüğü</title>
 
 
     <style>
@@ -88,6 +88,11 @@
             width: 100%;
             max-width: 300px;
         }
+
+        .search-form input {
+            width: 260px;
+        }
+
 
         .search-form input,
         .filter-form input,
@@ -306,58 +311,75 @@
             <!-- Sol taraf: Kartlar -->
             <div class="left-section">
 
-                <% journals.map(journal=> { %>
 
-                    <div class="dream-card">
-                        <h3>
-                            <%= journal.title %>
-                        </h3>
+                <% if (journals.length===0) { %>
+
+                    <div class="dream-card" style="margin-top: 150px;">
+                        <h3>Henüz Hiç Rüya Kayıt Etmedin</h3>
                         <br>
-                        <p>
-                            <%= journal.content %>
-                        </p>
-                        <br>
-
-                        <span class="badge">
-                            <%= journal.category %>
-                        </span>
-
-                        <br>
-                        <br>
-
-                        <a href="/dream/analysis/<%= journal._id %>"><button>Rüya Yorumun</button></a>
-
-
-                        <br>
-                        <br>
-
-
-                        <% if (journal.story ) { %>
-                            <a href="/story/<%= journal._id %>"><button>Hikaye</button></a>
-                            <% } else { %>
-                                <a href="/dream/story/<%= journal._id %>"><button>Hikaye</button></a>
-                                <% } %>
-
-
-
-                                    <br>
-                                    <br>
-
-
-                                    <a href="/image/<%= journal._id %>"><button>Görsel</button></a>
-
-
-                                    <br>
-                                    <br>
-
-
-                                    <a href="/dream/delete/<%= journal._id %>?_method=DELETE"><button
-                                            class="delete">Sil</button></a>
-
-
-
+                        <button onclick="window.location.href='/form'">Rüya Ekle</button>
                     </div>
-                    <% }) %>
+
+                    <% } %>
+
+
+
+                        <% journals.map(journal=> { %>
+
+                            <div class="dream-card">
+                                <h3>
+                                    <%= journal.title %>
+                                </h3>
+                                <br>
+                                <p>
+                                    <%= journal.content %>
+                                </p>
+                                <br>
+
+                                <span class="badge">
+                                    <%= journal.category %>
+                                </span>
+
+                                <br>
+                                <br>
+
+                                <a href="/dream/analysis/<%= journal._id %>"><button>Rüya Yorumun</button></a>
+
+                                <br>
+                                <br>
+
+
+                                <% if (journal.story ) { %>
+                                    <a href="/story/<%= journal._id %>"><button>Hikaye</button></a>
+                                    <% } else { %>
+                                        <a href="/dream/story/<%= journal._id %>"><button>Hikaye</button></a>
+                                        <% } %>
+
+                                            <br>
+                                            <br>
+
+
+
+                                            <% if (journal.url) { %>
+                                                <a href="/image/<%= journal._id %>"><button>Görsel</button></a>
+                                                <% } else { %>
+
+                                                    <a href="/dream/image/<%= journal._id %>"><button>Rüyanı
+                                                            Resmet</button></a>
+
+                                                    <% } %>
+
+
+                                                        <br><br>
+
+
+                                                        <a href="/dream/delete/<%= journal._id %>?_method=DELETE"><button
+                                                                class="delete">Sil</button></a>
+
+
+
+                            </div>
+                            <% }) %>
 
 
             </div>
@@ -406,14 +428,29 @@
 
 
 
-
-
-
         </div>
 
 
 
 
+
+
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p>Yükleniyor...</p>
+            </div>
+        </div>
+
+
+        <script>
+            const button = document.getElementById('stry-btn');
+            const loadingSpinner = document.getElementById('loading-screen');
+
+            button.addEventListener('click', function () {
+                loadingSpinner.style.display = 'block';
+            });
+        </script>
 
 
 

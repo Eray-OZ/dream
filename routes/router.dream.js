@@ -19,7 +19,7 @@ router.get("/filter", isAuthenticated, filterDream)
 
 router.get("/search", isAuthenticated, searchDream)
 
-router.delete("/delete/:id", deleteDream)
+router.delete("/delete/:id", isAuthenticated, deleteDream)
 
 router.get("/image/:id", isAuthenticated, generateImage)
 
