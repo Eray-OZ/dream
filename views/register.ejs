@@ -12,7 +12,9 @@
             <form method="POST" action="/user/register">
                 <input name="name" id="name" placeholder="İsim" type="name">
                 <input name="email" id="email" placeholder="Email" type="email">
-                <input name="password" id="password" placeholder="Şifre" type="password">
+                <input name="password" id="password" placeholder="Şifre" type="password" required minlength="6"
+                    maxlength="20" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*"
+                    title="En az bir sayı, bir büyük harf, bir küçük harf içermeli ve minimum 6 karakterden oluşmalı">
 
                 <button type="submit">Kayıt Ol</button>
             </form>

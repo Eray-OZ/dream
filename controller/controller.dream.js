@@ -2,6 +2,7 @@ import Dream from '../models/Dream.js'
 import axios from 'axios'
 import fs from 'node:fs'
 import FormData from 'form-data'
+import { v2 as cloudinary } from 'cloudinary'
 
 
 
@@ -54,8 +55,7 @@ export const addDream = async (req, res) => {
 
 
 
-
-            const promptCat = `Bu analizin aşağıdaki kategorilerden hangisine ait olduğunu belirt ve cevap olarak sadece bu seçeneklerden birini dön, açıklama yazma: Korku, Mutluluk, İlişki, İş, Aile, Geçmiş, Gelecek, Diğer. : ${content}`
+            const promptCat = `Bu analizin aşağıdaki kategorilerden hangisine ait olduğunu belirt ve cevap olarak sadece bu seçeneklerden birini dön, açıklama yazma: Korku, İlişki, İş, Aile, Geçmiş, Gelecek, Diğer. : ${content}`
 
 
             const responseCat = await axios.post(
@@ -97,6 +97,9 @@ export const addDream = async (req, res) => {
 
 
 export const generateImage = async (req, res) => {
+
+
+
 
     try {
 
@@ -156,9 +159,32 @@ export const generateImage = async (req, res) => {
 
 
         if (response.status === 200) {
-            fs.writeFileSync(`./${dream.title}.webp`, Buffer.from(response.data))
+            // fs.writeFileSync(`./${dream.title}.webp`, Buffer.from(response.data))
 
-            res.render('image.ejs', { dream })
+
+            const imageBuffer = Buffer.from(response.data);
+
+
+            cloudinary.uploader.upload_stream({ resource_type: 'image' }, async (error, result) => {
+                if (error) {
+                    console.error('Cloudinary upload error:', error);
+                    return;
+                }
+
+
+                dream.url += result.secure_url
+                await dream.save()
+
+
+                res.render('image.ejs', { dream })
+
+
+
+                console.log('Image uploaded to Cloudinary:', result);
+            }).end(imageBuffer);
+
+
+
         }
 
         else {
@@ -212,14 +238,6 @@ export const getStoryPage = async (req, res) => {
         const dream = await Dream.findById(id)
 
 
-        // const prompt = `Bir kişi, ${dream.title} adlı bir rüya gördü. Rüya, ${dream.content} şeklinde başladı. Ancak, bu rüya gizemli ve çözülmemiş bir şekilde yarıda kaldı. Yapay zeka, bu rüyanın devamını yaratmalı ve şu öğeleri içermelidir:
-        // Rüyanın atmosferi: [rüyanın atmosferi hakkında bir açıklama ekleyin, örneğin: karanlık, heyecanlı, huzur verici, korkutucu]
-        // Karakterlerin ilişkisi: [ana karakterin diğer karakterlerle olan ilişkisini anlatın]
-        // Karakterlerin karşılaştığı zorluklar: [karakterin rüya boyunca karşılaştığı zorluklar, engeller veya düşmanlar hakkında bilgi verin]
-        // Rüyanın teması: [rüyanın temel mesajı veya teması, örneğin: kaybolma, korku, keşif, aşk, hırs]
-        // Rüyanın sonuna nasıl ulaşılabilir: [yapay zekanın bu rüyayı nasıl sonlandıracağı hakkında bir yönlendirme ekleyin]
-        // Tüm bu öğeleri kullanarak rüyanın devamını yazmanı ve rüyanın nasıl tamamlanacağını yaratıcı bir şekilde açıklamanı istiyorum.
-        // Dönüş olarak sadece rüyayı dön`
 
 
         const prompt = `${dream.content} rüyasının devamını getiren bir hikaye yaz, sadece hikayenin kendisini dön herhangi bir açıklama yapma ya da soru sorma`

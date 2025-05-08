@@ -14,6 +14,10 @@ const DreamSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    url: {
+        type: String,
+        default: ''
+    },
     createdAd: {
         type: Date,
         default: Date.now

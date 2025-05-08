@@ -19,8 +19,9 @@
                 <% } %>
 
                     <br><br>
-                    <a href="/dream/image/<%= dream._id %>"><button id="stry-btn">Rüyanı Resmet</button></a>
-
+                    <% if (!dream.url) { %>
+                        <a href="/dream/image/<%= dream._id %>"><button id="stry-btn">Rüyanı Resmet</button></a>
+                        <% } %>
 
         </div>
 
