@@ -196,6 +196,7 @@ export const filterDream = async (req, res) => {
 
         const { filter } = req.query
 
+
         const journals = filter
             ? await Dream.find({ category: filter })
             : await Dream.find();

@@ -1,0 +1,84 @@
+<%- include('partials/_header') %>
+
+
+
+    <%- include('partials/_navbar') %>
+
+
+
+
+
+        <div class="container">
+
+
+
+            <div>
+
+                <form method="GET" action="/dream/search">
+                    <div class="search-bar-container">
+                        <div class="search-bar">
+                            <input type="text" name="query" placeholder="Rüya ara...">
+                            <button type="submit">Ara</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+                <form method="GET" action="/dream/filter">
+                    <div class="filter-container">
+                        <select id="categoryFilter" name="filter">
+                            <option value="all">Tüm Rüyalar</option>
+                            <option value="macera">Gelecek</option>
+                            <option value="gecmis">Geçmiş</option>
+                            <option value="Korku">Korku</option>
+                            <option value="iliskiler">İlişkiler</option>
+                            <option value="aile">Aile</option>
+                            <option value="is">İş</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+
+
+                        <button type="submit">Filtrele</button>
+
+                    </div>
+                </form>
+
+            </div>
+
+
+
+
+            <% journals.map(journal=> { %>
+                <div class="card">
+
+                    <h3>
+                        <%= journal.title %>
+                    </h3>
+                    <br>
+                    <p>
+                        <%= journal.content.split(" ").slice(0,15).join(" ") + " ..." %>
+                    </p>
+                    <br>
+
+                    <span class="badge">
+                        <%= journal.category %>
+                    </span>
+
+                    <br>
+                    <br>
+
+                    <a href="/dream/analysis/<%= journal._id %>"><button>Analiz</button></a>
+
+
+
+                    <!-- <a href="/story/"><button>Hikaye</button></a> -->
+
+                </div>
+
+                <% }) %>
+        </div>
+
+
+
+        <%- include('partials/_footer') %>

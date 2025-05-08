@@ -19,7 +19,7 @@ export const getLogin = async (req, res) => {
 export const getStory = async (req, res) => {
 
     const { id } = req.params
-    const dream = Dream.findById(id)
+    const dream = await Dream.findById(id)
 
 
     res.render('story.ejs', { dream })

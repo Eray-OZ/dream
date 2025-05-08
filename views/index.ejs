@@ -25,31 +25,42 @@
             overflow-y: auto;
             height: 100%;
 
-            background-image: url('background.jpg');
+
+
+
+            background-image: url('/images/bck.png');
+            /* Görselin yolu */
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
+            color: #fff;
+            font-family: Arial, sans-serif;
         }
+
+
+
 
         .landing-container {
             text-align: center;
-            padding: 50px 20px;
+            padding: 25px 10px;
             width: 80%;
             max-width: 900px;
-            background-color: #2d033b;
+            background-color: rgba(45, 3, 59, 0.6);
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(255, 78, 205, 0.4);
+
+
+
+
         }
 
-        .landing-container h1 {
+        .landing-container h3 {
             color: #ff4ecd;
             font-size: 36px;
             margin-bottom: 20px;
         }
 
         .landing-container p {
-            color: #f8f8f8;
             font-size: 18px;
             margin-bottom: 30px;
         }
@@ -124,20 +135,21 @@
 
 <body>
 
-    <div class="navbar">
-        <a href="#" class="logo">Rüya Günlüğü</a>
-        <ul>
-            <li><a href="/login">Giriş</a></li>
-            <li><a href="/register">Kayıt Ol</a></li>
-        </ul>
-    </div>
 
-    <div class="landing-container">
-        <h1>Hoşgeldiniz!</h1>
-        <p>Rüyalarınızı günlüğünüze kaydedin, rüyalarınızı analiz edin ve hikayelere dönüştürün!</p>
-        <button onclick="window.location.href='/login'">Hadi Başlayalım</button>
-    </div>
+    <%- include('partials/_navbar') %>
 
+
+
+        <div class="landing-container">
+            <p>Rüyalarınızı günlüğünüze kaydedin, bilinçaltınızın derinliklerini keşfedin,
+                rüyalarınızı analiz ederek anlamlandırın ve onları büyüleyici hikayelere dönüştürerek hayal gücünüzü
+                yeniden inşa edin!</p>
+
+
+            <% if (!user) { %>
+                <button onclick="window.location.href='/login'">Hadi Başlayalım</button>
+                <% } %>
+        </div>
 
 </body>
 

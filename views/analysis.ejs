@@ -12,7 +12,11 @@
                 <%= dream.analysis %>
             </p>
 
-            <a href="/dream/story/<%= dream._id %>"><button>Hikaye</button></a>
+            <br><br>
+
+            <% if (!dream.story) { %>
+                <a href="/dream/story/<%= dream._id %>"><button>Hikaye</button></a>
+                <% } %>
 
         </div>
 
