@@ -14,12 +14,39 @@
 
             <br><br>
 
-            <% if (!dream.story) { %>
-                <a href="/dream/story/<%= dream._id %>"><button>Hikaye</button></a>
+            <% if (!dream.story && dream.analysis.trim() !=="Analiz Yapılamadı" ) { %>
+                <a href="/dream/story/<%= dream._id %>"><button id="stry-btn">Hikaye</button></a>
                 <% } %>
+
+                    <br><br>
+                    <a href="/dream/image/<%= dream._id %>"><button id="stry-btn">Rüyanı Resmet</button></a>
+
 
         </div>
 
+
+
+
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p>Yükleniyor...</p>
+            </div>
+        </div>
+
+
+        <script>
+
+
+            const form = document.getElementById('stry-btn');
+            const loadingSpinner = document.getElementById('loading-screen');
+
+            form.addEventListener('submit', function (event) {
+                // Show the loading spinner when the form is submitted
+                loadingSpinner.style.display = 'block';
+            });
+
+        </script>
 
 
 

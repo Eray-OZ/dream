@@ -23,21 +23,35 @@
             display: flex;
             height: 100vh;
             padding-top: 60px;
+            background-image: url('/images/bck.png');
+            background-size: cover;
+            background-position: center;
 
         }
 
         .left-section {
             width: 60%;
-            background-color: #1a1a1a;
             padding: 30px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
 
+            overflow-y: scroll;
+            /* Kaydırma işlevini aktif tut */
 
         }
 
+
+        .left-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Firefox için scrollbar gizleme */
+        .left-section {
+            scrollbar-width: none;
+            /* Firefox */
+        }
 
         .dream-card {
             background-color: #2d033b;
@@ -54,9 +68,7 @@
 
         .right-section {
             width: 40%;
-            background-image: url('/images/bck.png');
-            background-size: cover;
-            background-position: center;
+
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
@@ -99,9 +111,7 @@
             transition: background 0.3s ease;
         }
 
-        button:hover {
-            background-color: #ff74d4;
-        }
+
 
         .filter-form label {
             color: #f8f8f8;
@@ -126,6 +136,7 @@
             background-attachment: fixed;
             color: #fff;
             font-family: Arial, sans-serif;
+
 
         }
 
@@ -162,6 +173,27 @@
             transition: background 0.3s ease;
         }
 
+        button:hover {
+            background-color: #ff74d4;
+        }
+
+        .delete {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            background-color: #9d202a;
+            color: white"
+
+        }
+
+        .delete:hover {
+            background-color: #d53845;
+        }
+
         .navbar .logo {
             color: #ff4ecd;
             font-size: 24px;
@@ -195,6 +227,66 @@
         .footer a {
             color: #ff4ecd;
             text-decoration: none;
+            font-weight: bold;
+        }
+
+
+
+        /* Loading Ekranı */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Yarı şeffaf arka plan */
+            display: none;
+            /* Başlangıçta gizli */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Yarı şeffaf arka plan */
+            padding: 40px;
+            border-radius: 15px;
+            color: #f8f8f8;
+            width: 300px;
+
+            margin-top: 150px;
+            margin-left: 400px;
+        }
+
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            /* Hafif şeffaf beyaz dış halka */
+            border-top: 8px solid #ff4ecd;
+            /* Dönen kısmın rengi */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+            /* Döndürme animasyonu */
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-container p {
+            font-size: 18px;
+            color: #f8f8f8;
             font-weight: bold;
         }
     </style>
@@ -233,14 +325,37 @@
                         <br>
                         <br>
 
-                        <a href="/dream/analysis/<%= journal._id %>"><button>Analiz</button></a>
+                        <a href="/dream/analysis/<%= journal._id %>"><button>Rüya Yorumun</button></a>
+
+
                         <br>
                         <br>
-                        <% if (journal.story) { %>
+
+
+                        <% if (journal.story ) { %>
                             <a href="/story/<%= journal._id %>"><button>Hikaye</button></a>
                             <% } else { %>
                                 <a href="/dream/story/<%= journal._id %>"><button>Hikaye</button></a>
                                 <% } %>
+
+
+
+                                    <br>
+                                    <br>
+
+
+                                    <a href="/image/<%= journal._id %>"><button>Görsel</button></a>
+
+
+                                    <br>
+                                    <br>
+
+
+                                    <a href="/dream/delete/<%= journal._id %>?_method=DELETE"><button
+                                            class="delete">Sil</button></a>
+
+
+
                     </div>
                     <% }) %>
 
@@ -256,13 +371,11 @@
                 <br><br><br>
 
 
-
-
-
                 <form class="search-form" action="/dream/search" method="GET">
                     <div class="search-bar-container">
                         <div class="search-bar">
                             <input type="text" name="query" placeholder="Rüya ara...">
+                            <br><br>
                             <button type="submit">Ara</button>
                         </div>
 
@@ -297,6 +410,12 @@
 
 
         </div>
+
+
+
+
+
+
 
 
 

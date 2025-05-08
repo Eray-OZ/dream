@@ -1,5 +1,5 @@
 import express from 'express'
-import { getForm, getRegister, getLogin, getStory, getIndexPage } from '../controller/controller.pages.js'
+import { getForm, getRegister, getLogin, getStory, getIndexPage, getImagePage } from '../controller/controller.pages.js'
 import { isAuthenticated } from '../middleware/middleware.authenticate.js'
 import { logoutUser } from '../controller/controller.user.js'
 
@@ -14,7 +14,9 @@ router.get("/register", getRegister)
 
 router.get("/login", getLogin)
 
-router.get("/story/:id", getStory)
+router.get("/story/:id", isAuthenticated, getStory)
+
+router.get("/image/:id", isAuthenticated, getImagePage)
 
 router.get("/logout", logoutUser)
 

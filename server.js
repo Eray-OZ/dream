@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import session from 'express-session'
+import methodOverride from 'method-override'
 import { connectDB } from './config/db.js'
 import routerPages from './routes/router.pages.js'
 import routerDreams from './routes/router.dream.js'
@@ -20,6 +21,12 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(express.static('public'))
 
+app.use(
+    methodOverride('_method', {
+        methods: ['POST', 'GET'],
+    })
+)
+
 
 app.use(session({
     secret: process.env.SECRET,
@@ -33,6 +40,8 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user;
     next();
 })
+
+
 
 
 app.use("/", routerPages)

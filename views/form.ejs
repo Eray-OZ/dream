@@ -9,7 +9,7 @@
 
         <div class="form-container">
             <h2>Rüyanızı Yazın</h2>
-            <form method="POST" action="/dream">
+            <form method="POST" action="/dream" id="dream-form">
                 <input name="title" id="title" placeholder="Başlık">
                 <textarea name="content" id="message" placeholder="Rüya..."></textarea>
                 <button type="submit">Keşfet</button>
@@ -18,6 +18,29 @@
 
 
 
+
+
+
+
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <p>Yükleniyor...</p>
+            </div>
+        </div>
+
+
+        <script>
+
+
+            const form = document.getElementById('dream-form');
+            const loadingSpinner = document.getElementById('loading-screen');
+
+            form.addEventListener('submit', function (event) {
+                // Show the loading spinner when the form is submitted
+                loadingSpinner.style.display = 'block';
+            });
+        </script>
 
 
 

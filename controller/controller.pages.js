@@ -26,7 +26,15 @@ export const getStory = async (req, res) => {
 }
 
 
+export const getImagePage = async (req, res) => {
 
+    const { id } = req.params
+
+    const dream = await Dream.findById(id)
+
+
+    res.render('image.ejs', { dream })
+}
 
 export const getIndexPage = async (req, res) => {
     res.render('index.ejs')

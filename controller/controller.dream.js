@@ -1,5 +1,9 @@
 import Dream from '../models/Dream.js'
 import axios from 'axios'
+import fs from 'node:fs'
+import FormData from 'form-data'
+
+
 
 
 
@@ -8,11 +12,10 @@ export const addDream = async (req, res) => {
 
     const userId = req.session.userId
 
-    console.log(userId)
 
     const { title, content } = req.body
 
-    const prompt = `Bu rüyanın sembolik ve psikolojik analizini yap, cevap olarak sadece rüya analizini dön herhangi bir soru sorma : ${content}`
+    const prompt = `Bu rüyanın sembolik ve psikolojik analizini yap, cevap olarak sadece rüya analizini dön herhangi bir soru sorma, girdi olarak verilen rüya anlamsızsa, random harflerden ya da sayılardan oluşuyorsa cevap olarak 'Analiz Yapılamadı' cevabını dön : ${content}`
 
     let analysis = `Analiz yapılmadı`
 
@@ -34,19 +37,82 @@ export const addDream = async (req, res) => {
         )
 
 
+
+
+
         analysis = response.data.candidates[0].content.parts[0].text
 
         analysis = analysis.replace(/[^a-zA-Z0-9çğıöşüÇĞİÖŞÜ\s]/g, '')
 
 
 
-        const promptCat = `Bu analizin aşağıdaki kategorilerden hangisine ait olduğunu belirt ve cevap olarak sadece bu seçeneklerden birini dön, açıklama yazma: Korku, Mutluluk, İlişki, İş, Aile, Geçmiş, Gelecek, Diğer. : ${content}`
+        if (analysis.trim() === 'Analiz Yapılamadı') {
+            res.render("error.ejs")
+        }
+
+        else {
 
 
-        const responseCat = await axios.post(
+
+
+            const promptCat = `Bu analizin aşağıdaki kategorilerden hangisine ait olduğunu belirt ve cevap olarak sadece bu seçeneklerden birini dön, açıklama yazma: Korku, Mutluluk, İlişki, İş, Aile, Geçmiş, Gelecek, Diğer. : ${content}`
+
+
+            const responseCat = await axios.post(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+                {
+                    contents: [{ role: "user", parts: [{ text: promptCat }] }]
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
+            )
+
+            category = responseCat.data.candidates[0].content.parts[0].text.trim()
+
+
+
+            const newDream = await Dream.create({
+                title: title,
+                content: content,
+                analysis: analysis,
+                category: category,
+                user: userId
+            })
+
+
+
+            res.render('analysis.ejs', { dream: newDream })
+        }
+
+    } catch (error) {
+        console.error(error.message)
+    }
+
+
+}
+
+
+
+export const generateImage = async (req, res) => {
+
+    try {
+
+        const { id } = req.params
+
+        const dream = await Dream.findById(id)
+
+
+
+        const translatePrompt = `Bu metini ingilizceye çevir, cevap olarak sadece çeviriyi dön açıklama yapma: ${dream.content}`
+
+
+        const translate = await axios.post(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
             {
-                contents: [{ role: "user", parts: [{ text: promptCat }] }]
+                contents: [{ role: "user", parts: [{ text: translatePrompt }] }]
             },
             {
                 headers: {
@@ -55,33 +121,55 @@ export const addDream = async (req, res) => {
             }
         )
 
-        category = responseCat.data.candidates[0].content.parts[0].text.trim()
+
+        const content = translate.data.candidates[0].content.parts[0].text
 
 
 
-        const newDream = await Dream.create({
-            title: title,
-            content: content,
-            analysis: analysis,
-            category: category,
-            user: userId
-        })
+        const key = process.env.STABILITY_API_KEY
+
+
+        const prompt = `"Imagine a surreal and dreamlike scene based on the following description: {dream}. The landscape should be vivid, atmospheric, and filled with whimsical details, blending the boundaries between reality and imagination. The scene should have a soft, ethereal glow and convey a sense of wonder and mystery.": ${content}`
+
+        const formData = new FormData()
+
+        formData.append('prompt', prompt)
+        formData.append('output_format', 'webp')
 
 
 
-        res.render('analysis.ejs', { dream: newDream })
+        const response = await axios.postForm(
+            `https://api.stability.ai/v2beta/stable-image/generate/core`,
+            formData,
+            {
+                validateStatus: undefined,
+                responseType: 'arraybuffer',
+                headers: {
+                    ...formData.getHeaders(),
+                    Authorization: `Bearer ${key}`,
+                    Accept: "image/*"
+                },
+            },
+        )
+
+
+
+
+        if (response.status === 200) {
+            fs.writeFileSync(`./${dream.title}.webp`, Buffer.from(response.data))
+
+            res.render('image.ejs', { dream })
+        }
+
+        else {
+            throw new Error(`${response.status}: ${response.data.toString()}`)
+        }
 
 
     } catch (error) {
-        console.error(error.message)
+        res.json(error)
     }
-
-
-
-
-
 }
-
 
 
 
@@ -101,6 +189,18 @@ export const getAnalysisPage = async (req, res) => {
     }
 
 }
+
+
+export const deleteDream = async (req, res) => {
+
+    const { id } = req.params
+
+    await Dream.findByIdAndDelete(id)
+
+    res.redirect("/dream")
+
+}
+
 
 
 export const getStoryPage = async (req, res) => {
@@ -172,7 +272,6 @@ export const getJournal = async (req, res) => {
 
         const journals = await Dream.find({ user: id })
 
-        console.log(journals)
 
         res.render('journal.ejs', { journals })
 
