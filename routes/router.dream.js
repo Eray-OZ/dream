@@ -1,5 +1,5 @@
 import express from 'express'
-import { addDream, getAnalysisPage, getJournal, getStoryPage, filterDream, searchDream, deleteDream, generateImage } from '../controller/controller.dream.js'
+import { addDream, getAnalysisPage, getJournal, getStoryPage, filterDream, deleteDream, generateImage } from '../controller/controller.dream.js'
 import { isAuthenticated } from '../middleware/middleware.authenticate.js'
 
 
@@ -17,7 +17,6 @@ router.get("/", isAuthenticated, getJournal)
 
 router.get("/filter", isAuthenticated, filterDream)
 
-router.get("/search", isAuthenticated, searchDream)
 
 router.delete("/delete/:id", isAuthenticated, deleteDream)
 

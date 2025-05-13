@@ -307,46 +307,32 @@ export const getJournal = async (req, res) => {
 
 
 export const filterDream = async (req, res) => {
-
-
     try {
+        const { filter, query } = req.query;
+        const userId = req.session.userId;
 
+        let queryObj = { user: userId };
 
-        const { filter } = req.query
+        // Kategori filtresi ekleme
+        if (filter && filter !== '') {
+            queryObj.category = filter;
+        }
 
+        // Arama filtresi ekleme
+        if (query && query !== '') {
+            const searchRegex = new RegExp(query, 'i');
+            queryObj = {
+                ...queryObj,
+                $or: [{ title: searchRegex }, { content: searchRegex }]
+            };
+        }
 
-        const journals = filter
-            ? await Dream.find({ category: filter })
-            : await Dream.find();
+        // Filtreleme ve aramaya göre sonuçları getir
+        const journals = await Dream.find(queryObj).sort({ createdAt: -1 });
 
-
-        res.render('journal.ejs', { journals })
-
-
+        res.render('journal.ejs', { journals });
     } catch (error) {
-        res.json(error)
-    }
-
-}
-
-
-export const searchDream = async (req, res) => {
-
-
-    try {
-
-        const { query } = req.query
-
-
-        const searchRegex = new RegExp(query, 'i');
-
-        const journals = query
-            ? await Dream.find({ $or: [{ title: searchRegex }, { content: searchRegex }] })
-            : await Dream.find();
-
-        res.render("journal.ejs", { journals });
-
-    } catch (error) {
-        res.json(error)
+        console.error(error);
+        res.json(error);
     }
 }
