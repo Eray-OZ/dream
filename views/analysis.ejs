@@ -2,6 +2,7 @@
 
 
 
+
     <%- include('partials/_navbar') %>
 
 
@@ -15,12 +16,13 @@
             <br><br>
 
             <% if (!dream.story && dream.analysis.trim() !=="Analiz Yapılamadı" ) { %>
-                <a href="/dream/story/<%= dream._id %>"><button id="stry-btn">Hikaye</button></a>
+                <a href="/dream/story/<%= dream._id %>"><button id="story-btn" class="loading-btn">Hikaye</button></a>
                 <% } %>
 
                     <br><br>
                     <% if (!dream.url) { %>
-                        <a href="/dream/image/<%= dream._id %>"><button id="stry-btn">Rüyanı Resmet</button></a>
+                        <a href="/dream/image/<%= dream._id %>"><button id="image-btn" class="loading-btn">Rüyanı
+                                Resmet</button></a>
                         <% } %>
 
         </div>
@@ -37,14 +39,17 @@
 
 
         <script>
-            const button = document.getElementById('stry-btn');
-            const loadingSpinner = document.getElementById('loading-screen');
+            document.addEventListener('DOMContentLoaded', function () {
+                const loadingButtons = document.querySelectorAll('.loading-btn');
+                const loadingScreen = document.getElementById('loading-screen');
 
-            button.addEventListener('click', function () {
-                loadingSpinner.style.display = 'block';
+                loadingButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        loadingScreen.style.display = 'flex';
+                    });
+                });
             });
         </script>
-
 
 
 

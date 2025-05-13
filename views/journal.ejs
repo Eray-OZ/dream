@@ -36,21 +36,31 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-
             overflow-y: scroll;
             /* Kaydırma işlevini aktif tut */
 
+            /* Firefox için scrollbar ayarı */
+            scrollbar-width: thin;
+            scrollbar-color: #ff4ecd #1a1a1a;
         }
 
-
+        /* Sadece bu bölüm için webkit scrollbar stili */
         .left-section::-webkit-scrollbar {
-            display: none;
+            width: 8px;
         }
 
-        /* Firefox için scrollbar gizleme */
-        .left-section {
-            scrollbar-width: none;
-            /* Firefox */
+        .left-section::-webkit-scrollbar-track {
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 10px;
+        }
+
+        .left-section::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #2d033b, #ff4ecd);
+            border-radius: 10px;
+        }
+
+        .left-section::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #5f0f40, #ff74d4);
         }
 
         .dream-card {
@@ -145,16 +155,11 @@
 
         }
 
-
-
-
-
-
         .navbar {
             background-color: #2d033b;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: ce nter;
             padding: 15px 30px;
             box-shadow: 0 2px 10px rgba(255, 78, 205, 0.4);
             position: fixed;
@@ -261,9 +266,9 @@
             border-radius: 15px;
             color: #f8f8f8;
             width: 300px;
-
-            margin-top: 150px;
-            margin-left: 400px;
+            /* Margin değerlerini kaldırıyoruz, çünkü flexbox ile ortalayacağız */
+            /* margin-top: 150px;
+            margin-left: 300px; */
         }
 
         .spinner {
@@ -322,10 +327,7 @@
 
                     <% } %>
 
-
-
                         <% journals.map(journal=> { %>
-
                             <div class="dream-card">
                                 <h3>
                                     <%= journal.title %>
@@ -363,10 +365,8 @@
                                             <% if (journal.url) { %>
                                                 <a href="/image/<%= journal._id %>"><button>Görsel</button></a>
                                                 <% } else { %>
-
                                                     <a href="/dream/image/<%= journal._id %>"><button>Rüyanı
                                                             Resmet</button></a>
-
                                                     <% } %>
 
 
@@ -380,8 +380,6 @@
 
                             </div>
                             <% }) %>
-
-
             </div>
 
 
@@ -400,7 +398,7 @@
                             <br><br>
                             <button type="submit">Ara</button>
                         </div>
-
+                    </div>
                 </form>
 
 
@@ -408,7 +406,6 @@
 
 
                 <form class="filter-form" action="/dream/filter" method="GET">
-
                     <select id="categoryFilter" name="filter">
                         <option value="">Tüm Rüyalar</option>
                         <option value="Gelecek">Gelecek</option>
@@ -419,20 +416,10 @@
                         <option value="İş">İş</option>
                         <option value="Diğer">Diğer</option>
                     </select>
-
-
                     <button type="submit">Filtrele</button>
-
                 </form>
             </div>
-
-
-
         </div>
-
-
-
-
 
 
         <div id="loading-screen" class="loading-screen">
@@ -444,11 +431,15 @@
 
 
         <script>
-            const button = document.getElementById('stry-btn');
-            const loadingSpinner = document.getElementById('loading-screen');
+            // Select all buttons in dream cards
+            const dreamButtons = document.querySelectorAll('.dream-card button');
+            const loadingScreen = document.getElementById('loading-screen');
 
-            button.addEventListener('click', function () {
-                loadingSpinner.style.display = 'block';
+            // Add click event listener to each button
+            dreamButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    loadingScreen.style.display = 'flex';
+                });
             });
         </script>
 

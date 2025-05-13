@@ -9,11 +9,17 @@ export const registerUser = async (req, res) => {
 
     try {
 
-        const user = await User.create(req.body);
+        const user = await User.create(req.body)
+
+
         res.redirect('/login')
 
     } catch (error) {
-        res.json(error)
+        console.log("Kayıt hatası:", error);
+        if (error.code === 11000) {
+            return res.render("register", { error: "Bu e-posta zaten kullanılıyor." });
+        }
+        res.render("register", { error: "Bir hata oluştu. Lütfen tekrar deneyin." });
     }
 }
 

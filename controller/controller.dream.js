@@ -16,7 +16,7 @@ export const addDream = async (req, res) => {
 
     const { title, content } = req.body
 
-    const prompt = `Bu rüyanın sembolik ve psikolojik analizini yap, cevap olarak sadece rüya analizini dön herhangi bir soru sorma, girdi olarak verilen rüya anlamsızsa, random harflerden ya da sayılardan oluşuyorsa cevap olarak 'Analiz Yapılamadı' cevabını dön : ${content}`
+    const prompt = `Bu rüyanın sembolik ve psikolojik analizini yap, cevap olarak sadece rüya analizini dön herhangi bir soru sorma, girdi olarak verilen rüya anlamsızsa, random harflerden ya da sayılardan oluşuyorsa cevap olarak 'Analiz Yapılamadı' cevabını dön, cevapta alt başlıklar olmasın sadece paragraf yaz : ${content}`
 
     let analysis = `Analiz yapılmadı`
 
@@ -99,8 +99,6 @@ export const addDream = async (req, res) => {
 export const generateImage = async (req, res) => {
 
 
-
-
     try {
 
         const { id } = req.params
@@ -162,7 +160,6 @@ export const generateImage = async (req, res) => {
 
 
 
-
         if (response.status === 200) {
             // fs.writeFileSync(`./${dream.title}.webp`, Buffer.from(response.data))
 
@@ -185,7 +182,6 @@ export const generateImage = async (req, res) => {
 
 
 
-                console.log('Image uploaded to Cloudinary:', result);
             }).end(imageBuffer);
 
 
@@ -293,7 +289,7 @@ export const getJournal = async (req, res) => {
     try {
 
 
-        const journals = await Dream.find({ user: id })
+        const journals = await Dream.find({ user: id }).sort({ createdAd: -1 })
 
 
         res.render('journal.ejs', { journals })
@@ -332,9 +328,6 @@ export const filterDream = async (req, res) => {
     }
 
 }
-
-
-
 
 
 export const searchDream = async (req, res) => {
