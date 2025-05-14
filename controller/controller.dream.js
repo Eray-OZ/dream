@@ -130,7 +130,10 @@ export const generateImage = async (req, res) => {
         const key = process.env.STABILITY_API_KEY
 
 
-        const prompt = `"Imagine a surreal and dreamlike scene based on the following description: {dream}. The landscape should be vivid, atmospheric, and filled with whimsical details, blending the boundaries between reality and imagination. The scene should have a soft, ethereal glow and convey a sense of wonder and mystery.": ${content}`
+        const old_propmpt = "Imagine a scene based on the following description: {dream}. The landscape should be vivid, atmospheric, and filled with whimsical details, blending the boundaries between reality and imagination. The scene should have a soft, ethereal glow and convey a sense of wonder and mystery."
+
+
+        const prompt = `Imagine a scene based on the following description: {dream}. A dreamlike scene with soft lighting, subtle surreal elements, and calm colors. The environment feels quiet and mysterious, resembling a peaceful memory. No extreme fantasy or exaggerated features. Style is cinematic and slightly painterly.: ${content}`
 
         const formData = new FormData()
 

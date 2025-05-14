@@ -426,7 +426,7 @@
 
 
                 <form class="search-form" action="/dream/filter" method="GET">
-                    <h3 style="color: #ff4ecd; text-align: center; margin-bottom: 10px;">Rüya Ara ve Filtrele</h3>
+                    <h3 style="color: #ff4ecd; text-align: center; margin-bottom: 10px;">Rüya Ara</h3>
 
                     <label for="searchQuery">Arama Yap:</label>
                     <div class="search-bar-container">
@@ -447,7 +447,7 @@
                         <option value="Diğer">Diğer</option>
                     </select>
 
-                    <button type="submit">Ara ve Filtrele</button>
+                    <button type="submit">Ara</button>
                 </form>
             </div>
         </div>
@@ -470,8 +470,13 @@
             dreamButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     loadingScreen.style.display = 'flex';
+
+
                 });
             });
+
+
+
         </script>
 
 
